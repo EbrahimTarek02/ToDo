@@ -45,7 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
         Scaffold(
           backgroundColor: AppThemeColors.transparent,
 
-          appBar: AppBar(title: Text('To Do List'),),
+          appBar: AppBar(
+            title: Text('To Do List'),
+            toolbarHeight: MediaQuery.of(context).size.height * 0.11,
+          ),
 
           bottomNavigationBar: bottomNavBarBuilder(),
 

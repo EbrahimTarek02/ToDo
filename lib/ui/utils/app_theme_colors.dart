@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 abstract class AppThemeColors {
   static const Color primary = Color(0xff5D9CEC);
   static const Color unselectedIconColor = Color(0xffC8C9CB);
+  static const Color red = Colors.red;
 
   //light
   static const Color transparent = Colors.transparent;

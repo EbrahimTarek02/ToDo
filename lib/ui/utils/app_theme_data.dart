@@ -20,6 +20,16 @@ abstract class AppThemeData {
           fontWeight: FontWeight.normal,
           color: AppThemeColors.accentLight
       ),
+      titleMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: AppThemeColors.primary
+      ),
+      bodyLarge: TextStyle(
+        color: AppThemeColors.primaryTextColorLight,
+        fontSize: 12,
+        fontWeight: FontWeight.normal
+      ),
     ),
 
     appBarTheme: AppBarTheme(
@@ -94,16 +104,26 @@ abstract class AppThemeData {
           fontWeight: FontWeight.normal,
           color: AppThemeColors.accentLight
       ),
+      titleMedium: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: AppThemeColors.primary
+      ),
+      bodyLarge: TextStyle(
+          color: AppThemeColors.accentLight,
+          fontSize: 12,
+          fontWeight: FontWeight.normal
+      ),
     ),
 
     appBarTheme: AppBarTheme(
-        elevation: 0.0,
-        backgroundColor: AppThemeColors.primary,
-        titleTextStyle: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: AppThemeColors.accentDark
-        )
+      elevation: 0.0,
+      backgroundColor: AppThemeColors.primary,
+      titleTextStyle: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: AppThemeColors.accentDark
+      )
     ),
 
     iconTheme: IconThemeData(
