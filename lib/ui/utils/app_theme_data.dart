@@ -30,6 +30,11 @@ abstract class AppThemeData {
         fontSize: 12,
         fontWeight: FontWeight.normal
       ),
+      bodySmall: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+          color: AppThemeColors.primaryTextColorLight
+      ),
     ),
 
     appBarTheme: AppBarTheme(
@@ -113,6 +118,11 @@ abstract class AppThemeData {
           color: AppThemeColors.accentLight,
           fontSize: 12,
           fontWeight: FontWeight.normal
+      ),
+      bodySmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        color: AppThemeColors.labelMediumTextColorDark
       ),
     ),
 
