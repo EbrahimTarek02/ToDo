@@ -1,19 +1,37 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/todo_model.dart';
+import 'package:todo_app/providers/tasks_provider.dart';
 import '../../common/myTextFormField.dart';
 import '../../utils/app_theme_colors.dart';
 
 class BottomSheetBuilder extends StatefulWidget {
 
+  String headerText, buttonText;
+  BottomSheetBuilder({required this.headerText, required this.buttonText});
+
   @override
-  _BottomSheetBuilderState createState() => _BottomSheetBuilderState();
+  _BottomSheetBuilderState createState() => _BottomSheetBuilderState(headerText: headerText, buttonText: buttonText);
 }
 
 class _BottomSheetBuilderState extends State<BottomSheetBuilder> {
 
-  DateTime selectedDate = DateTime.now();
+  String headerText, buttonText;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  _BottomSheetBuilderState({required this.headerText, required this.buttonText});
+
+  late TasksProvider provider;
 
   @override
   Widget build(BuildContext context) {
+
+    provider = Provider.of(context);
+
     return Padding(
       padding: EdgeInsets.only(
           top: 20.0,
@@ -27,27 +45,27 @@ class _BottomSheetBuilderState extends State<BottomSheetBuilder> {
 
         children: [
           Text(
-            'Add New Task',
+            headerText,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleSmall,
           ),
           SizedBox(height: 20,),
-          MyTextFormField(label: 'Enter Your Task Title'),
+          MyTextFormField(label: 'Enter Your Task Title', controller: titleController,),
           SizedBox(height: 10,),
-          MyTextFormField(label: 'Enter Your Task Description'),
+          MyTextFormField(label: 'Enter Your Task Description', controller: descriptionController,),
           SizedBox(height: 20,),
           InkWell(
-            onTap: () => openDateTimePicker(),
+            onTap: () => provider.openDateTimePicker(context),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Select Time',
+                  'Select Date',
                   style: Theme.of(context).textTheme.labelMedium!.copyWith(color: AppThemeColors.primaryTextColorLight),
                 ),
                 Text(
-                  '${selectedDate.day}-${selectedDate.month}-${selectedDate.year}',
+                  '${provider.selectedDate.day}-${provider.selectedDate.month}-${provider.selectedDate.year}',
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ],
@@ -55,9 +73,9 @@ class _BottomSheetBuilderState extends State<BottomSheetBuilder> {
           ),
           SizedBox(height: 20.0,),
           ElevatedButton(
-            onPressed: (){},
+            onPressed: () => addTaskToFirebase(),
             child: Text(
-              'Add Task',
+              buttonText,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -67,16 +85,23 @@ class _BottomSheetBuilderState extends State<BottomSheetBuilder> {
     );
   }
 
-  void openDateTimePicker() async{
-    selectedDate = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)),
-    ) ?? selectedDate;
+  void addTaskToFirebase() {
+    CollectionReference todosCollectionRef =  FirebaseFirestore.instance.collection(TodoModel.collectionName);
 
-    setState(() {
+    DocumentReference emptyDocumentRef =  todosCollectionRef.doc();
 
-    });
+    emptyDocumentRef.set({
+      'id' : emptyDocumentRef.id,
+      'title' : titleController.text,
+      'description' : descriptionController.text,
+      'date' : provider.selectedDate,
+      'isDone' : false,
+    }).timeout(
+      Duration(milliseconds: 300),
+      onTimeout: () {
+        provider.getTasks();
+        Navigator.pop(context);
+      },
+    );
   }
 }

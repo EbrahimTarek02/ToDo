@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/ui/screens/bottom_sheet/bottom_sheet.dart';
-import 'package:todo_app/ui/tabs/settings/settings_tab.dart';
-import 'package:todo_app/ui/tabs/tasks_list/tasks_list_tab.dart';
+import 'package:todo_app/ui/screens/home/tabs/settings/settings_tab.dart';
+import 'package:todo_app/ui/screens/home/tabs/tasks_list/tasks_list_tab.dart';
 import 'package:todo_app/ui/utils/app_theme_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           appBar: AppBar(
             title: Text('To Do List'),
-            toolbarHeight: MediaQuery.of(context).size.height * 0.11,
+            toolbarHeight: MediaQuery.of(context).size.height * 0.14,
           ),
 
           bottomNavigationBar: bottomNavBarBuilder(),
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             isScrollControlled: true,
             context: context,
 
-            builder: (_) => BottomSheetBuilder()
+            builder: (_) => BottomSheetBuilder(headerText: 'Add New Task', buttonText: 'Add Task',)
         );
       },
 
